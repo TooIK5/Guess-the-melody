@@ -57,6 +57,23 @@ function attributeSetter() {
     link.item(1).setAttribute('data-value', false);
     link.item(2).setAttribute('data-value', false);
     link.item(3).setAttribute('data-value', false);
-    //alert(link.item(3).dataset.value); //Альтернатива getAttribute
+    //alert(link.); //Альтернатива getAttribute
 }
 
+
+function getTarget(e) {
+    if (!e) {
+        e = window.event; // e = событие объекта window
+    }
+    return e.target || e.srcElement; //новые браузеры и не поддерживающие свойство event
+}
+
+function itemDone(e) {
+    let target;
+    target = getTarget(e);
+    alert(target.dataset.value);
+}
+
+var eventRegion = document.querySelector('#ButtonsBlock');
+    eventRegion.addEventListener('click', (e) => {
+        itemDone(e)}, false);
