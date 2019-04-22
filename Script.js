@@ -65,7 +65,7 @@ function getTarget(e) {
     if (!e) {
         e = window.event; // e = событие объекта window
     }
-    return e.target || e.srcElement; //новые браузеры и не поддерживающие свойство event
+    return e.target || e.srcElement; //новые браузеры или не поддерживающие свойство event
 }
 
 function itemDone(e) {
