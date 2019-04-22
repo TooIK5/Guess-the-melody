@@ -57,7 +57,6 @@ function attributeSetter() {
     link.item(1).setAttribute('data-value', false);
     link.item(2).setAttribute('data-value', false);
     link.item(3).setAttribute('data-value', false);
-    //alert(link.); //Альтернатива getAttribute
 }
 
 
