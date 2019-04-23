@@ -1,4 +1,4 @@
-function creatorStartButton() {
+function createStartButtonElement() {
     let startButton = document.createElement('button'),
         textInBut = document.createTextNode('Start the Game!');
     startButton.appendChild(textInBut);
@@ -7,7 +7,7 @@ function creatorStartButton() {
     HiderForButtonsBlock('none');
 }
 
-function creatorControlButton() {
+function createControlButton() {
     let button = document.createElement('button');
     button.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
     wrapper.insertBefore(button, buttonsBlock); //(element, nextSibling)
@@ -18,7 +18,7 @@ function HiderForButtonsBlock(property) {
     buttonsBlock.style.display = property;
 }
 
-function ButtonCreator(textInButton) {
+function AddMelodyButton(textInButton) {
     let ButtonName = document.createElement("button"),
         textNodeName = document.createTextNode(textInButton);
     ButtonName.appendChild(textNodeName);
@@ -28,10 +28,10 @@ function ButtonCreator(textInButton) {
 
 function buttonInstaller() {
     HiderForButtonsBlock('block');
-    ButtonCreator('Rammstein - deutschland');
-    ButtonCreator('Heavydirtysoul - Twenty One Pilots');
-    ButtonCreator('Andre Gagnon - Comme Au Premier Jour');
-    ButtonCreator('Реанимация - Гражданская оборона');
+    AddMelodyButton('Rammstein - deutschland');
+    AddMelodyButton('Heavydirtysoul - Twenty One Pilots');
+    AddMelodyButton('Andre Gagnon - Comme Au Premier Jour');
+    AddMelodyButton('Реанимация - Гражданская оборона');
 }
 
 function removerButtons(name) {
@@ -45,7 +45,6 @@ function attributeSetter() {
     link.item(2).setAttribute('data-value', false);
     link.item(3).setAttribute('data-value', false);
 }
-
 
 function getTarget(e) {
     if (!e) {
@@ -64,7 +63,7 @@ var wrapper = document.querySelector('.wrapper');
 var buttonsBlock = document.querySelector('#ButtonsBlock');
 var eventRegion = document.querySelector('#ButtonsBlock');
 
-creatorStartButton();
+createStartButtonElement();
 var startButton = document.querySelector('.startButton');
 
 eventRegion.addEventListener('click', (e) => {
@@ -74,6 +73,6 @@ eventRegion.addEventListener('click', (e) => {
 startButton.addEventListener('click', () => {
     buttonInstaller();
     removerButtons(startButton);
-    creatorControlButton();
+    createControlButton();
     attributeSetter();
 }, false);
