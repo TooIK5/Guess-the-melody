@@ -1,27 +1,22 @@
-var wrapper = document.querySelector('.wrapper'),
-    buttonsBlock = document.querySelector('#ButtonsBlock');
-
 function creatorStartButton() {
     let startButton = document.createElement('button'),
         textInBut = document.createTextNode('Start the Game!');
-        startButton.appendChild(textInBut);
-        startButton.className = 'startButton';
-        wrapper.insertBefore(startButton, buttonsBlock); //(element, nextSibling)
-        HiderForButtonsBlock('none');
+    startButton.appendChild(textInBut);
+    startButton.className = 'startButton';
+    wrapper.insertBefore(startButton, buttonsBlock); //(element, nextSibling)
+    HiderForButtonsBlock('none');
 }
 
 function creatorControlButton() {
     let button = document.createElement('button');
-        button.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
-        wrapper.insertBefore(button, buttonsBlock); //(element, nextSibling)
-        button.setAttribute('id', 'controlButton');
+    button.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+    wrapper.insertBefore(button, buttonsBlock); //(element, nextSibling)
+    button.setAttribute('id', 'controlButton');
 }
 
 function HiderForButtonsBlock(property) {
     buttonsBlock.style.display = property;
 }
-
-creatorStartButton();
 
 function ButtonCreator(textInButton) {
     let ButtonName = document.createElement("button"),
@@ -33,23 +28,15 @@ function ButtonCreator(textInButton) {
 
 function buttonInstaller() {
     HiderForButtonsBlock('block');
-    ButtonCreator( 'Rammstein - deutschland');
-    ButtonCreator( 'Heavydirtysoul - Twenty One Pilots');
-    ButtonCreator( 'Andre Gagnon - Comme Au Premier Jour');
-    ButtonCreator( 'Реанимация - Гражданская оборона');
+    ButtonCreator('Rammstein - deutschland');
+    ButtonCreator('Heavydirtysoul - Twenty One Pilots');
+    ButtonCreator('Andre Gagnon - Comme Au Premier Jour');
+    ButtonCreator('Реанимация - Гражданская оборона');
 }
 
 function removerButtons(name) {
     wrapper.removeChild(name);
 }
-
-var startButton = document.querySelector('.startButton');
-    startButton.addEventListener('click',  () => {
-        buttonInstaller();
-        removerButtons(startButton);
-        creatorControlButton();
-        attributeSetter();
-    }, false);
 
 function attributeSetter() {
     let link = document.querySelectorAll('.Buttons');
@@ -73,6 +60,20 @@ function itemDone(e) {
     alert(target.dataset.value);
 }
 
+var wrapper = document.querySelector('.wrapper');
+var buttonsBlock = document.querySelector('#ButtonsBlock');
 var eventRegion = document.querySelector('#ButtonsBlock');
-    eventRegion.addEventListener('click', (e) => {
-        itemDone(e)}, false);
+var startButton = document.querySelector('.startButton');
+
+eventRegion.addEventListener('click', (e) => {
+    itemDone(e)
+}, false);
+
+startButton.addEventListener('click', () => {
+    buttonInstaller();
+    removerButtons(startButton);
+    creatorControlButton();
+    attributeSetter();
+}, false);
+
+creatorStartButton();
