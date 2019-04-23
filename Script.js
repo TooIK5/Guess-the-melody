@@ -63,6 +63,8 @@ function itemDone(e) {
 var wrapper = document.querySelector('.wrapper');
 var buttonsBlock = document.querySelector('#ButtonsBlock');
 var eventRegion = document.querySelector('#ButtonsBlock');
+
+creatorStartButton();
 var startButton = document.querySelector('.startButton');
 
 eventRegion.addEventListener('click', (e) => {
@@ -75,5 +77,3 @@ startButton.addEventListener('click', () => {
     creatorControlButton();
     attributeSetter();
 }, false);
-
-creatorStartButton();
