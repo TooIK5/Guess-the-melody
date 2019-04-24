@@ -62,12 +62,16 @@ body {
     transform: translate(-50%);
     margin-top: 5px;
     display: block;
-    width: 80%;
+    width: 640px;
     top: 60px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
     transition: background 0.5s;
+}
+
+.Buttons:first-child {
+    margin-top: 0;
 }
 
 .Buttons:hover {

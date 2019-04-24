@@ -1,24 +1,24 @@
-function createStartButtonElement() {
+function addStartButton() {
     let startButton = document.createElement('button'),
         textInBut = document.createTextNode('Start the Game!');
     startButton.appendChild(textInBut);
     startButton.className = 'startButton';
     wrapper.insertBefore(startButton, buttonsBlock); //(element, nextSibling)
-    HiderForButtonsBlock('none');
+    isShow('none');
 }
 
-function createControlButton() {
+function addControlButton() {
     let button = document.createElement('button');
     button.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
     wrapper.insertBefore(button, buttonsBlock); //(element, nextSibling)
     button.setAttribute('id', 'controlButton');
 }
 
-function HiderForButtonsBlock(property) {
+function isShow(property) {
     buttonsBlock.style.display = property;
 }
 
-function AddMelodyButton(textInButton) {
+function addMelodyButton(textInButton) {
     let ButtonName = document.createElement("button"),
         textNodeName = document.createTextNode(textInButton);
     ButtonName.appendChild(textNodeName);
@@ -26,19 +26,19 @@ function AddMelodyButton(textInButton) {
     ButtonName.className = 'Buttons';
 }
 
-function buttonInstaller() {
-    HiderForButtonsBlock('block');
-    AddMelodyButton('Rammstein - deutschland');
-    AddMelodyButton('Heavydirtysoul - Twenty One Pilots');
-    AddMelodyButton('Andre Gagnon - Comme Au Premier Jour');
-    AddMelodyButton('Реанимация - Гражданская оборона');
+function installButton() {
+    isShow('block');
+    addMelodyButton('Rammstein - deutschland');
+    addMelodyButton('Heavydirtysoul - Twenty One Pilots');
+    addMelodyButton('Andre Gagnon - Comme Au Premier Jour');
+    addMelodyButton('Реанимация - Гражданская оборона');
 }
 
-function removerButtons(name) {
+function removeButton(name) {
     wrapper.removeChild(name);
 }
 
-function attributeSetter() {
+function setAttribute() {
     let link = document.querySelectorAll('.Buttons');
     link.item(0).setAttribute('data-value', true);
     link.item(1).setAttribute('data-value', false);
@@ -56,23 +56,24 @@ function getTarget(e) {
 function itemDone(e) {
     let target;
     target = getTarget(e);
-    alert(target.dataset.value);
+    console.log(target);
 }
 
-var wrapper = document.querySelector('.wrapper');
-var buttonsBlock = document.querySelector('#ButtonsBlock');
-var eventRegion = document.querySelector('#ButtonsBlock');
-
-createStartButtonElement();
+var wrapper = document.querySelector('.wrapper'),
+    buttonsBlock = document.querySelector('#ButtonsBlock');
+addStartButton();
 var startButton = document.querySelector('.startButton');
 
-eventRegion.addEventListener('click', (e) => {
+buttonsBlock.addEventListener('click', (e) => {
     itemDone(e)
 }, false);
 
 startButton.addEventListener('click', () => {
-    buttonInstaller();
-    removerButtons(startButton);
-    createControlButton();
-    attributeSetter();
+    installButton();
+    removeButton(startButton);
+    addControlButton();
+    setAttribute();
 }, false);
+
+
+
