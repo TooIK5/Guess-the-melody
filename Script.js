@@ -1,3 +1,4 @@
+
 function addStartButton() {
     let startButton = document.createElement('button'),
         textInBut = document.createTextNode('Start the Game!');
@@ -26,24 +27,15 @@ function addMelodyButton(textInButton) {
     ButtonName.className = 'Buttons';
 }
 
-function installButton() {
+function installButton(songs) {
     isShow('block');
-    addMelodyButton('Rammstein - deutschland');
-    addMelodyButton('Heavydirtysoul - Twenty One Pilots');
-    addMelodyButton('Andre Gagnon - Comme Au Premier Jour');
-    addMelodyButton('Реанимация - Гражданская оборона');
+    for(let i = 0; i < songs.length; i++) {
+        addMelodyButton(songs[i]);
+    }
 }
 
 function removeButton(name) {
     wrapper.removeChild(name);
-}
-
-function setAttribute() {
-    let link = document.querySelectorAll('.Buttons');
-    link.item(0).setAttribute('data-value', true);
-    link.item(1).setAttribute('data-value', false);
-    link.item(2).setAttribute('data-value', false);
-    link.item(3).setAttribute('data-value', false);
 }
 
 function getTarget(e) {
@@ -56,8 +48,34 @@ function getTarget(e) {
 function itemDone(e) {
     let target;
     target = getTarget(e);
-    console.log(target);
+    checkAnswer(target, songs, 1);
 }
+
+function checkAnswer(target, songs, i) {
+   if (target.innerHTML === songs[i]) {
+        console.log('true')
+   } else {
+    console.log('false')
+   }
+}
+
+function togglePlay(audio) {
+    audio.paused ? audio.play() : audio.pause();
+}
+
+function addListener() {
+    let controlButton = document.querySelector('#controlButton');
+    controlButton.addEventListener('click', () => {
+        togglePlay(audio);
+    }, false);
+}
+
+var songs = ['Rammstein - deutschland','Heavydirtysoul - Twenty One Pilots',
+                 'Andre Gagnon - Comme Au Premier Jour','Реанимация - Гражданская оборона'];
+var songsSurce = ['https://sgi1.beltelecom-by-minsk.vkuseraudio.net/p8/d43d9d8c55b66a.mp3?extra=B6NX5XKfPqBfDZI-hgTlTK47veyHdqyYT48OrQ-jMR6rwYPwQMNfxw6_XJe7My41-sJwUbMnITry9LwcaMZVM7eIIA0asmUvTNubJYCk7z2MK261ZyxEoPUmv9V3FsLz10V7gnaBIX_b9mkPl-0Ozn4aSg',
+    '','','',''];
+
+var audio = new Audio(songsSurce[0]);
 
 var wrapper = document.querySelector('.wrapper'),
     buttonsBlock = document.querySelector('#ButtonsBlock');
@@ -65,15 +83,14 @@ addStartButton();
 var startButton = document.querySelector('.startButton');
 
 buttonsBlock.addEventListener('click', (e) => {
-    itemDone(e)
+    itemDone(e);
 }, false);
 
 startButton.addEventListener('click', () => {
-    installButton();
+    installButton(songs);
     removeButton(startButton);
     addControlButton();
-    setAttribute();
+    addListener();
 }, false);
-
 
 
