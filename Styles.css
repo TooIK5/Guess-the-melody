@@ -106,5 +106,11 @@ body {
     background-color: rgb( 75, 183, 141 );
 }
 
+.falseAnswer {
+    background: red;
+}
 
-
+.trueAnswer {
+    background: lawngreen;
+    color: darkgreen;
+}
