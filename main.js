@@ -29,7 +29,7 @@ function addMelodyButton(text) {
 }
 
 function installButton() {
-    for(let i = 0; i < songs.length; i++) {
+    for(let i = 0; i < high; i++) {
         addMelodyButton(songs[i]);
     }
 }
@@ -38,33 +38,27 @@ function removeButton(name) {
     wrapper.removeChild(name);
 }
 
-function getTarget(e) {
-    if (!e) {
-        e = window.event; // e = событие объекта window
-    }
-    return e.target || e.srcElement; //новые браузеры или не поддерживающие свойство event
-}
-
 function itemDone(e) {
     let target;
-    target = getTarget(e);
-    checkAnswer(target,1);
+    target = e.target;
+    checkAnswer(target);
 }
 
-/*function addNextSongs() {
-
-}*/
-
-function checkAnswer(target, i) {
+function checkAnswer(target) {
+    let n = correctAnswers[index];
     if (target.classList.contains('Buttons'))//Чтобы не реагировать на нажатия на див
     {
-        if (target.innerHTML === songs[i]) {
+        if (target.innerHTML === songs[n]) {
         target.classList.add("trueAnswer")
     } else {
         target.classList.add("falseAnswer");
-        buttons[i].classList.add("trueAnswer");
+        buttons[n].classList.add("trueAnswer");
         }
     }
+}
+
+function toggleIcon(controlButton, audio) {
+    audio.paused ? controlButton.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>' : controlButton.innerHTML = '<i class="fas fa-pause"></i>';
 }
 
 function togglePlay(audio) {
@@ -75,31 +69,70 @@ function addListener() {
     let controlButton = document.querySelector('#controlButton');
         controlButton.addEventListener('click', () => {
         togglePlay(audio);
+        toggleIcon(controlButton, audio);
     }, false);
+}
+
+function addNextSongs() {
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].textContent = songs[high];
+        high += 1;
+    }
+    songChange();
+}
+
+function songChange() {
+    index += 1;
+    audio = new  Audio(songsSurce[n]);
+}
+
+function  stop() {
+    audio.pause();
+}
+
+function removeClass() {
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('trueAnswer', 'falseAnswer');
+    }
 }
 
 const songs = ['Rammstein - deutschland',
                 'Heavydirtysoul - Twenty One Pilots',
                 'Andre Gagnon - Comme Au Premier Jour',
                 'Реанимация - Гражданская оборона',
+
                 'Marilyn Manson - Tourniquet',
                 'Rammstein - RADIO',
                 'Slipknot - The Blister Exists',
-                'Marilyn Manson - Treats Of Romanse'];
+                'Marilyn Manson - Treats Of Romanse',
 
-const songsSurce = ['https://sgi1.beltelecom-by-minsk.vkuseraudio.net/p8/1f04517eaf5929.mp3?extra=PwoOY4r0EeXprw3tg5IjKhCFOlxETaCsUJZhIrGZkM91Y7FqIBZmPQrpyqCjN-gfl-DzcWStzo6Hkoh_1fvsaR4LVGL9ojhyK9ZDJFmTPJ4RmemKsoILPFzq7F-54oiuL24rf02Mo8ed5D_0Jqv4oDnZ',
-    '','','',''];
+                'Sam Roberts Band - Chasing the Light',
+                'Yann Tiersen - Penn ar Lann',
+                'Barns Courtney - "99"',
+                'Concorde - Just Kiss Her'
+];
 
-var audio = new Audio(songsSurce[0]);
+const songsSurce = ['Source/Twenty one - Heavydirtysoul.mp3',
+                    'Source/Marilyn Manson – Threats of Romance.mp3',
+    '','',''];
+
+const correctAnswers = [1,4,9,14,18];
+var high = 4,
+    index = 0,
+    n = 0,
+    audio = new Audio(songsSurce[n]);
 const wrapper = document.querySelector('.wrapper'),
     buttonsBlock = document.querySelector('#ButtonsBlock');
     addStartButton();
-    installButton();
+    installButton(high);
 const startButton = document.querySelector('.startButton'),
       buttons = document.querySelectorAll('.Buttons');
 
 buttonsBlock.addEventListener('click', (e) => {
     itemDone(e);
+    setTimeout(stop, 3500);
+    setTimeout(addNextSongs, 4000);
+    setTimeout(removeClass, 4000);
 }, false);
 
 startButton.addEventListener('click', () => {
