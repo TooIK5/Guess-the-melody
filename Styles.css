@@ -84,7 +84,6 @@ body {
     height: 50%;
     position: absolute;
     top: 50%;
-    border-top: 1px solid darkred;
 }
 
 #controlButton {
@@ -113,4 +112,13 @@ body {
 .trueAnswer {
     background: lawngreen;
     color: darkgreen;
+}
+
+#counter {
+    position: absolute;
+    top: 50%;
+    left: 56%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    color: whitesmoke;
 }

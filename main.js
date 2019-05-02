@@ -11,7 +11,7 @@ function addStartButton() {
 function addControlButton() {
     let button = document.createElement('button');
     button.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
-    wrapper.insertBefore(button, buttonsBlock); //(element, nextSibling)
+    wrapper.insertBefore(button, buttonsBlock);
     button.setAttribute('id', 'controlButton');
 }
 
@@ -41,15 +41,22 @@ function removeButton(name) {
 function itemDone(e) {
     let target;
     target = e.target;
-    checkAnswer(target);
+    if (target.classList.contains('Buttons')) {
+        checkAnswer(target);
+        removeElements();
+        setTimeout(stop, 350);
+        setTimeout(removeClass, 400);
+        setTimeout(addNextSongs, 400);
+    }
 }
 
 function checkAnswer(target) {
-    if (target.classList.contains('Buttons'))//Чтобы не реагировать на нажатия на див
+    if (target.classList.contains('Buttons'))
     {
-        var key = target.innerHTML;
+        let key = target.innerHTML;
         if (songs[key] !== 0) {
-        target.classList.add("trueAnswer")
+        target.classList.add("trueAnswer");
+            guessedSongs += 1;
     } else {
         target.classList.add("falseAnswer");
         //buttons[n].classList.add("trueAnswer");
@@ -78,10 +85,10 @@ function addNextSongs() {
         buttons[i].textContent = keys[high];
         high += 1;
     }
-    songChange();
+    audioChange();
 }
 
-function songChange() {
+function audioChange() {
     audio = new Audio(songs[keys[n]]);
     n = answers[index];
     index += 1;
@@ -95,6 +102,21 @@ function removeClass() {
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove('trueAnswer', 'falseAnswer');
     }
+}
+
+function removeElements() {
+    if (high === 20) {
+        for (let i = 0; i < buttons.length; i++) {
+            isShow(buttons[i],'none');
+        }
+        let b = document.querySelector('#controlButton');
+        isShow(b, 'none');
+        changeCounter();
+    }
+}
+
+function changeCounter() {
+    elCounter.textContent = 'Guessed melody:' + guessedSongs;
 }
 
 const songs = {
@@ -111,15 +133,28 @@ const songs = {
     'Sam Roberts Band - Chasing the Light': 0,
     'Yann Tiersen - Penn ar Lann': 0,
     'Barns Courtney - "99"': 0,
-    'Concorde - Just Kiss Her': 'Source/Concorde - Just Kiss Her.mp3'
+    'Concorde - Just Kiss Her': 'Source/Concorde - Just Kiss Her.mp3',
+
+    'Fruhling In Paris - Rammstein': 'Source/Fruhling In Paris - Rammstein.mp3',
+    'New Karma - BRONCHO': 0,
+    'Walking To Winter - Mineral': 0,
+    'The Nameless - Slipknot': 0,
+
+    'Chikapunga - Wooden Constructions': 0,
+    'Bullwinkle, Pt. I - The Centurians': 'Source/The Centurians - Bullwinkle, Part Ii.mp3',
+    'wife - motorama': 0,
+    'Cornucopia - Serj Tankian': 0
 };
 
 const keys = Object.keys(songs),
-      answers = [7, 11];
-var n = 7,
+      answers = [7, 11,12,17],
+      elCounter = document.querySelector('#counter');
+
+var n = 7,  
     audio = new Audio(songs['Heavydirtysoul - Twenty One Pilots']),
     high = 4,
-    index = 1;
+    index = 1,
+    guessedSongs = 0;
 
 const wrapper = document.querySelector('.wrapper'),
     buttonsBlock = document.querySelector('#ButtonsBlock');
@@ -130,9 +165,6 @@ const startButton = document.querySelector('.startButton'),
 
 buttonsBlock.addEventListener('click', (e) => {
     itemDone(e);
-    setTimeout(stop, 3500);
-    setTimeout(addNextSongs, 4000);
-    setTimeout(removeClass, 4000);
 }, false);
 
 startButton.addEventListener('click', () => {
