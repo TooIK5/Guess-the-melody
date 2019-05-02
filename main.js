@@ -29,8 +29,8 @@ function addMelodyButton(text) {
 }
 
 function installButton() {
-    for(let i = 0; i < high; i++) {
-        addMelodyButton(songs[i]);
+    for(let i = 0; i < 4; i++) {
+        addMelodyButton(keys[i]);
     }
 }
 
@@ -45,23 +45,23 @@ function itemDone(e) {
 }
 
 function checkAnswer(target) {
-    let n = correctAnswers[index];
     if (target.classList.contains('Buttons'))//Чтобы не реагировать на нажатия на див
     {
-        if (target.innerHTML === songs[n]) {
+        var key = target.innerHTML;
+        if (songs[key] !== 0) {
         target.classList.add("trueAnswer")
     } else {
         target.classList.add("falseAnswer");
-        buttons[n].classList.add("trueAnswer");
+        //buttons[n].classList.add("trueAnswer");
         }
     }
 }
 
-function toggleIcon(controlButton, audio) {
+function toggleIcon(controlButton) {
     audio.paused ? controlButton.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>' : controlButton.innerHTML = '<i class="fas fa-pause"></i>';
 }
 
-function togglePlay(audio) {
+function togglePlay() {
     audio.paused ? audio.play() : audio.pause();
 }
 
@@ -75,15 +75,16 @@ function addListener() {
 
 function addNextSongs() {
     for (let i = 0; i < buttons.length; i++) {
-        buttons[i].textContent = songs[high];
+        buttons[i].textContent = keys[high];
         high += 1;
     }
     songChange();
 }
 
 function songChange() {
+    audio = new Audio(songs[keys[n]]);
+    n = answers[index];
     index += 1;
-    audio = new  Audio(songsSurce[n]);
 }
 
 function  stop() {
@@ -96,35 +97,34 @@ function removeClass() {
     }
 }
 
-const songs = ['Rammstein - deutschland',
-                'Heavydirtysoul - Twenty One Pilots',
-                'Andre Gagnon - Comme Au Premier Jour',
-                'Реанимация - Гражданская оборона',
+const songs = {
+    'Rammstein - deutschland': 0,
+    'Heavydirtysoul - Twenty One Pilots': 'Source/Twenty one - Heavydirtysoul.mp3',
+    'Andre Gagnon - Comme Au Premier Jour': 0,
+    'Metallica - nothing else metter': 0,
 
-                'Marilyn Manson - Tourniquet',
-                'Rammstein - RADIO',
-                'Slipknot - The Blister Exists',
-                'Marilyn Manson - Treats Of Romanse',
+    'Marilyn Manson - Tourniquet': 0,
+    'Rammstein - RADIO': 0,
+    'Slipknot - The Blister Exists': 0,
+    'Marilyn Manson - Treats Of Romanse': 'Source/Marilyn Manson – Threats of Romance.mp3',
 
-                'Sam Roberts Band - Chasing the Light',
-                'Yann Tiersen - Penn ar Lann',
-                'Barns Courtney - "99"',
-                'Concorde - Just Kiss Her'
-];
+    'Sam Roberts Band - Chasing the Light': 0,
+    'Yann Tiersen - Penn ar Lann': 0,
+    'Barns Courtney - "99"': 0,
+    'Concorde - Just Kiss Her': 'Source/Concorde - Just Kiss Her.mp3'
+};
 
-const songsSurce = ['Source/Twenty one - Heavydirtysoul.mp3',
-                    'Source/Marilyn Manson – Threats of Romance.mp3',
-    '','',''];
+const keys = Object.keys(songs),
+      answers = [7, 11];
+var n = 7,
+    audio = new Audio(songs['Heavydirtysoul - Twenty One Pilots']),
+    high = 4,
+    index = 1;
 
-const correctAnswers = [1,4,9,14,18];
-var high = 4,
-    index = 0,
-    n = 0,
-    audio = new Audio(songsSurce[n]);
 const wrapper = document.querySelector('.wrapper'),
     buttonsBlock = document.querySelector('#ButtonsBlock');
     addStartButton();
-    installButton(high);
+    installButton();
 const startButton = document.querySelector('.startButton'),
       buttons = document.querySelectorAll('.Buttons');
 
