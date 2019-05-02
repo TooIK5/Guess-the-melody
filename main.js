@@ -44,9 +44,9 @@ function itemDone(e) {
     if (target.classList.contains('Buttons')) {
         checkAnswer(target);
         removeElements();
-        setTimeout(stop, 350);
-        setTimeout(removeClass, 400);
-        setTimeout(addNextSongs, 400);
+        setTimeout(stop, 3500);
+        setTimeout(removeClass, 4000);
+        setTimeout(addNextSongs, 4000);
     }
 }
 
@@ -150,7 +150,7 @@ const keys = Object.keys(songs),
       answers = [7, 11,12,17],
       elCounter = document.querySelector('#counter');
 
-var n = 7,  
+var n = 7,
     audio = new Audio(songs['Heavydirtysoul - Twenty One Pilots']),
     high = 4,
     index = 1,
