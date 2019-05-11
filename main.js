@@ -45,11 +45,11 @@ function itemDone(e) {
         checkAnswer(target);
         removeBlur();
         removeElements();
-        setTimeout(stop, 3500);
-        setTimeout(removeClass, 4000);
-        setTimeout(addNextSongs, 4000);
-        setTimeout(makeVideoElement, 4000);
-        setTimeout(changeVideo, 3500);
+        setTimeout(stop, 4500);
+        setTimeout(removeClass, 5000);
+        setTimeout(addNextSongs, 5000);
+        setTimeout(makeVideoElement, 5000);
+        setTimeout(changeVideo, 4500);
     }
 }
 
