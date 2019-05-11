@@ -43,10 +43,13 @@ function itemDone(e) {
     target = e.target;
     if (target.classList.contains('Buttons')) {
         checkAnswer(target);
+        removeBlur();
         removeElements();
-        setTimeout(stop, 3500);
-        setTimeout(removeClass, 4000);
-        setTimeout(addNextSongs, 4000);
+        setTimeout(stop, 4500);
+        setTimeout(removeClass, 5000);
+        setTimeout(addNextSongs, 5000);
+        setTimeout(makeVideoElement, 5000);
+        setTimeout(changeVideo, 4500);
     }
 }
 
@@ -64,19 +67,25 @@ function checkAnswer(target) {
     }
 }
 
-function toggleIcon(controlButton) {
-    audio.paused ? controlButton.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>' : controlButton.innerHTML = '<i class="fas fa-pause"></i>';
+function toggleIcon(controlButton, videoElement) {
+    videoElement.paused ? controlButton.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>' : controlButton.innerHTML = '<i class="fas fa-pause"></i>';
 }
 
-function togglePlay() {
-    audio.paused ? audio.play() : audio.pause();
+function togglePlayVideo(videoElement) {
+    videoElement.paused ? videoElement.play() : videoElement.pause();
+}
+
+function  removeBlur() {
+    document.querySelector('.blur').classList.remove('blur');
+    console.log('wasCalled');
 }
 
 function addListener() {
     let controlButton = document.querySelector('#controlButton');
         controlButton.addEventListener('click', () => {
-        togglePlay(audio);
-        toggleIcon(controlButton, audio);
+            let videoElement = document.querySelector('.video');
+            togglePlayVideo(videoElement);
+        toggleIcon(controlButton,videoElement );
     }, false);
 }
 
@@ -89,13 +98,8 @@ function addNextSongs() {
 }
 
 function audioChange() {
-    audio = new Audio(songs[keys[n]]);
     n = answers[index];
     index += 1;
-}
-
-function  stop() {
-    audio.pause();
 }
 
 function removeClass() {
@@ -119,45 +123,78 @@ function changeCounter() {
     elCounter.textContent = 'Guessed melody:' + guessedSongs;
 }
 
+function makeVideoElement() {
+    let video = document.createElement('video'),
+        source = document.createElement("source"),
+        key = videoObj[keysInVideo[VideoIndex]];
+    source.setAttribute('src', key);
+    video.setAttribute('autoplay', '');
+    video.classList.add('video', 'blur');
+    video.appendChild(source);
+    viewContent.appendChild(video);
+}
+
+function changeVideo() {
+    function remove() {
+        document.querySelector('.video').remove();
+    }
+    remove();
+    VideoIndex += 1;
+}
+
+changeBG = () => {
+  wrapper.style.background = 'black'
+};
+
+const videoObj = {
+    1 : 'Source/1.mp4',
+    2 : 'Source/2.mp4',
+    3 : 'Source/3.mp4',
+    4 : 'Source/4.mp4',
+    5 : 'Source/5.mp4'
+};
+
 const songs = {
     'Rammstein - deutschland': 0,
-    'Heavydirtysoul - Twenty One Pilots': 'Source/Twenty one - Heavydirtysoul.mp3',
+    'Heavydirtysoul - Twenty One Pilots': 1,
     'Andre Gagnon - Comme Au Premier Jour': 0,
     'Metallica - nothing else metter': 0,
 
     'Marilyn Manson - Tourniquet': 0,
     'Rammstein - RADIO': 0,
-    'Slipknot - The Blister Exists': 0,
-    'Marilyn Manson - Treats Of Romanse': 'Source/Marilyn Manson – Threats of Romance.mp3',
+    'Slipknot - The Blister Exists': 1,
+    'Marilyn Manson - Treats Of Romanse': 0,
 
     'Sam Roberts Band - Chasing the Light': 0,
     'Yann Tiersen - Penn ar Lann': 0,
     'Barns Courtney - "99"': 0,
-    'Concorde - Just Kiss Her': 'Source/Concorde - Just Kiss Her.mp3',
+    'Concorde - Just Kiss Her': 1,
 
-    'Fruhling In Paris - Rammstein': 'Source/Fruhling In Paris - Rammstein.mp3',
-    'New Karma - BRONCHO': 0,
+    'Fruhling In Paris - Rammstein': 0,
+    'New Karma - BRONCHO': 'true',
     'Walking To Winter - Mineral': 0,
     'The Nameless - Slipknot': 0,
 
     'Chikapunga - Wooden Constructions': 0,
-    'Bullwinkle, Pt. I - The Centurians': 'Source/The Centurians - Bullwinkle, Part Ii.mp3',
+    'Bullwinkle, Pt. I - The Centurians': 1,
     'wife - motorama': 0,
     'Cornucopia - Serj Tankian': 0
 };
 
 const keys = Object.keys(songs),
+      keysInVideo = Object.keys(videoObj),
       answers = [7, 11,12,17],
       elCounter = document.querySelector('#counter');
 
 var n = 7,
-    audio = new Audio(songs['Heavydirtysoul - Twenty One Pilots']),
+    VideoIndex = 0,
     high = 4,
     index = 1,
     guessedSongs = 0;
 
 const wrapper = document.querySelector('.wrapper'),
-    buttonsBlock = document.querySelector('#ButtonsBlock');
+      buttonsBlock = document.querySelector('#ButtonsBlock'),
+      viewContent = document.querySelector('#viewContent');
     addStartButton();
     installButton();
 const startButton = document.querySelector('.startButton'),
@@ -169,8 +206,10 @@ buttonsBlock.addEventListener('click', (e) => {
 
 startButton.addEventListener('click', () => {
     removeButton(startButton);
+    changeBG();
     addControlButton();
     addListener();
+    makeVideoElement();
     isShow(buttonsBlock,'block');
     for (let i = 0; i < buttons.length; i++) {
         isShow(buttons[i],'block');
